@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ImKwadz | Fun</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      padding: 20px;
+      background: #1e293b;
+    }
+
+    nav a {
+      color: #67e8f9;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+    }
+
+    .hero {
+      padding: 80px 20px 50px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+
+    .card {
+      margin: 30px auto 0;
+      padding: 24px;
+      border-radius: 16px;
+      background: #1e293b;
+      max-width: 500px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #22d3ee;
+      color: #0f172a;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #67e8f9;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #a78bfa;
+      min-height: 30px;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 20px;
+      background: #1e293b;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>ImKwadz</h2>
+    <nav>
+      <a href="/home/">Home</a>
+      <a href="/fun/">Fun</a>
+      <a href="/about/">About</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <h1>Fun Page</h1>
+    <p>
+      Welcome to the fun page. Click the button and get a random fun message.
+    </p>
+
+    <div class="card">
+      <button onclick="showMessage()">Click for Fun</button>
+      <div id="message"></div>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 ImKwadz
+  </footer>
+
+  <script>
+    function showMessage() {
+      const messages = [
+        "🎉 You found some fun!",
+        "😎 Stay cool, ImKwadz style.",
+        "🚀 Fun level increased.",
+        "🔥 This site is awesome.",
+        "😂 You unlocked a silly message."
+      ];
+
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      document.getElementById("message").textContent = messages[randomIndex];
+    }
+  </script>
+</body>
+</html>
