@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ImKwadz | Cookie Clicker</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -190,7 +192,7 @@
     <h1>Cookie Clicker</h1>
     <p>Click the cookie. Buy upgrades. Save your progress.</p>
 
-    <div class="cookie" onclick="clickCookie()">🍪</div>
+    <div class="cookie" id="cookie">🍪</div>
 
     <div class="stats-grid">
       <div class="stat-box">
@@ -212,8 +214,8 @@
     </div>
 
     <div>
-      <button onclick="saveGame()">Save Game</button>
-      <button class="secondary" onclick="resetGame()">Reset</button>
+      <button id="saveButton">Save Game</button>
+      <button class="secondary" id="resetButton">Reset</button>
     </div>
 
     <div class="message" id="message"></div>
@@ -224,7 +226,7 @@
       <div class="shop-item">
         <strong>Stronger Click</strong>
         <span>+1 per click</span>
-        <button onclick="buyUpgrade('click')">
+        <button id="buyClick">
           Buy for <span id="clickCost">25</span>
         </button>
       </div>
@@ -232,7 +234,7 @@
       <div class="shop-item">
         <strong>Auto Clicker</strong>
         <span>+1 cookie per second</span>
-        <button onclick="buyUpgrade('auto')">
+        <button id="buyAuto">
           Buy for <span id="autoCost">50</span>
         </button>
       </div>
@@ -240,7 +242,7 @@
       <div class="shop-item">
         <strong>Bakery</strong>
         <span>+5 cookies per second</span>
-        <button onclick="buyUpgrade('bakery')">
+        <button id="buyBakery">
           Buy for <span id="bakeryCost">200</span>
         </button>
       </div>
@@ -306,15 +308,11 @@
         state.perClick += 1;
         state.costs.click = Math.floor(state.costs.click * 1.8);
         setMessage("Per click upgraded.");
-      }
-
-      if (type === "auto") {
+      } else if (type === "auto") {
         state.perSecond += 1;
         state.costs.auto = Math.floor(state.costs.auto * 1.9);
         setMessage("Auto clicker bought.");
-      }
-
-      if (type === "bakery") {
+      } else if (type === "bakery") {
         state.perSecond += 5;
         state.costs.bakery = Math.floor(state.costs.bakery * 2);
         setMessage("Bakery bought.");
@@ -330,6 +328,7 @@
 
     function loadGame() {
       const saved = localStorage.getItem(SAVE_KEY);
+
       if (!saved) {
         updateDisplay();
         return;
@@ -340,16 +339,16 @@
         if (parsed) {
           state = parsed;
         }
-      } catch (e) {
-        console.log("Could not load save.");
+      } catch (error) {
+        setMessage("Save could not load.");
       }
 
       updateDisplay();
-      setMessage("Save loaded.");
     }
 
     function resetGame() {
-      if (!confirm("Reset your cookie game?")) return;
+      const ok = confirm("Reset your cookie game?");
+      if (!ok) return;
 
       state = {
         cookies: 0,
@@ -368,7 +367,20 @@
       setMessage("Game reset.");
     }
 
-    setInterval(() => {
+    document.getElementById("cookie").addEventListener("click", clickCookie);
+    document.getElementById("saveButton").addEventListener("click", saveGame);
+    document.getElementById("resetButton").addEventListener("click", resetGame);
+    document.getElementById("buyClick").addEventListener("click", function () {
+      buyUpgrade("click");
+    });
+    document.getElementById("buyAuto").addEventListener("click", function () {
+      buyUpgrade("auto");
+    });
+    document.getElementById("buyBakery").addEventListener("click", function () {
+      buyUpgrade("bakery");
+    });
+
+    setInterval(function () {
       if (state.perSecond > 0) {
         earn(state.perSecond);
       }
